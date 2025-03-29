@@ -3,26 +3,39 @@ import HelloWorld from './components/HelloWorld.vue'
 import LandingView from './views/LandingView.vue'
 import StoragePane from './views/StoragePane.vue'
 import { useSolidSession } from './composables/useSolidSession';
+import { useServiceWorkerUpdate } from './composables/useServiceWorkerUpdate';
 
+const { hasUpdatedAvailable, refreshApp } = useServiceWorkerUpdate();
 const { session, restoreSession } = useSolidSession();
-restoreSession().then(() => console.log("Logged in:",session.isActive, session.webId));
+restoreSession().then(() => console.log("Logged in:", session.isActive, "WebID:", session.webId));
 </script>
 
 <template>
   <div id="content-header">
-    <!-- <img id="logo" src="/public/img/icons/apple-touch-icon-76x76.png" alt="Icon" /> -->
-    <span>
-      <HelloWorld />
-    </span>
-    <span style="color:black; font-weight: bold;">Solid Cloud</span>
-    <span>
-      <HelloWorld v-if="session.isActive" />
-    </span>
+    <div class="col-3">
+      <img id="logo" src="/src/assets/logo.png" alt="Icon" /> 
+    </div>
+    <div class="hidden lg:block lg:col-3 text-center">
+      <span style="color:black; font-weight: bold;">Your Data Space</span>
+    </div>
+    <div class="col-3 flex justify-content-end">
+      <span>
+        <HelloWorld v-if="session.isActive" />
+      </span>
+    </div>
   </div>
   <div id="content-background-pane">
     <LandingView />
     <!-- <StoragePane /> -->
   </div>
+  <Dialog id="update-dialog" header="We updated the App!" v-model:visible="hasUpdatedAvailable" position="bottomright"
+    :breakpoints="{ '420px': '100vw' }">
+    <div>Save your progress.</div>
+    <div>Get the latest version.</div>
+    <template #footer>
+      <Button label="Update" autofocus @click="refreshApp" />
+    </template>
+  </Dialog>
   <Toast position="bottom-right" :breakpoints="{ '420px': { width: '100%', right: '0', left: '0' } }" />
 </template>
 
@@ -81,5 +94,9 @@ body {
   height: 50px;
   width: 50px;
   object-fit: contain;
+}
+
+#update-dialog {
+  border-radius: 30px;
 }
 </style>

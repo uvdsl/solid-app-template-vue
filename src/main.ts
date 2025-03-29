@@ -11,6 +11,7 @@ import 'primeflex/primeflex.css';
 import Button from "primevue/button";
 import InputText from 'primevue/inputtext';
 import Divider from 'primevue/divider';
+import Dialog from 'primevue/dialog';
 
 
 import Toast from 'primevue/toast';
@@ -26,6 +27,7 @@ app.use(PrimeVue, {
 app.component('Button', Button);
 app.component('InputText', InputText);
 app.component('Divider', Divider);
+app.component('Dialog', Dialog);
 
 
 app.component('Toast', Toast);
