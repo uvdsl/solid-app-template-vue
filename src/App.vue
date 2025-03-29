@@ -1,28 +1,17 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
 import LandingView from './views/LandingView.vue'
-import StoragePane from './views/StoragePane.vue'
+import ProfileHeader from './components/ProfileHeader.vue'
 import { useSolidSession } from './composables/useSolidSession';
 import { useServiceWorkerUpdate } from './composables/useServiceWorkerUpdate';
 
 const { hasUpdatedAvailable, refreshApp } = useServiceWorkerUpdate();
 const { session, restoreSession } = useSolidSession();
-restoreSession().then(() => console.log("Logged in:", session.isActive, "WebID:", session.webId));
+restoreSession().then(() => console.log("Logged in:", session.webId));
 </script>
 
 <template>
   <div id="content-header">
-    <div class="col-3">
-      <img id="logo" src="/src/assets/logo.png" alt="Icon" /> 
-    </div>
-    <div class="hidden lg:block lg:col-3 text-center">
-      <span style="color:black; font-weight: bold;">Your Data Space</span>
-    </div>
-    <div class="col-3 flex justify-content-end">
-      <span>
-        <HelloWorld v-if="session.isActive" />
-      </span>
-    </div>
+    <ProfileHeader />
   </div>
   <div id="content-background-pane">
     <LandingView />
@@ -98,5 +87,11 @@ body {
 
 #update-dialog {
   border-radius: 30px;
+}
+
+#profile-photo {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
 }
 </style>
