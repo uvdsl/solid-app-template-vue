@@ -110,6 +110,7 @@ class QuintStore {
 
 /**
  * A QuintStore is a set of quints (s,p,o,g,d). It thus keeps track of where datasets (i.e. Quads) were retrieved from.
+ * 
  * This is the reactive version, where query results (obtained via {@link getQuintReactive}) are updated when the underlying data changes.
  */
 class ReactiveQuintStore extends QuintStore {
@@ -165,8 +166,10 @@ class ReactiveQuintStore extends QuintStore {
 
 /**
  * A QuintStore is a set of quints (s,p,o,g,d). It thus keeps track of where datasets where retrieved from.
+ * 
  * This is the web version (manual edition), call {@link getQuintReactiveFromWeb} to fetch a dataset from the web if it is not already loaded into the store.
  * Datasets are lazy loaded, and not updated automatically: Call {@link updateFromWeb} to trigger a re-load of a dataset.
+ * 
  * Then, whenever the data in the store is updated, all reactive query results (obtainer via {@link getQuintReactiveFromWeb} or {@link getQuintReactive}) are updated as well.
  * 
  */
@@ -205,8 +208,22 @@ class WebReactiveQuintStore extends ReactiveQuintStore {
 
 }
 
+/**
+*  Usage Example
+* 
+```ts
+const { store } = useWebReactiveQuintStore();
+
+let nameQueryResult: Ref<Quint[]> = await store.getQuintReactiveFromWeb(webId, VCARD("fn"), null, null, webId);
+let photoQueryResult: Ref<Quint[]> = await store.getQuintReactiveFromWeb(webId, VCARD("hasPhoto"), null, null, webId);
+
+const name = computed(() => nameQueryResult.value.map(e => e.object)[0]);
+const vcardPhoto = computed(() => photoQueryResult.value.map(e => e.object)[0]);
+```
+*/
 const store = reactive(new WebReactiveQuintStore());
 
 export const useWebReactiveQuintStore = () => {
   return { store };
 };
+
