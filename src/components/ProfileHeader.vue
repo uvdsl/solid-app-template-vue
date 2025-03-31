@@ -1,44 +1,70 @@
 <script setup lang="ts">
 import { useSolidSession } from '../composables/useSolidSession';
-import { ref, Ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { VCARD } from '../libs/namespaces';
-import { useDatasetStore } from '../composables/useDatasetStore';
-import { getResource, parseToN3 } from '../libs/solidRequests';
+import { useReactiveStoreWithWeb, Quint } from '../composables/useReactiveStoreWithWeb';
 
 const { session } = useSolidSession();
-const { datasetStore } = useDatasetStore();
+const { store } = useReactiveStoreWithWeb();
 
-let name: Ref<string | undefined> = ref();
-let vcardPhoto: Ref<string | undefined> = ref();
 
-watch(() => session.webId, async (webId, _) => {
+let nameQueryResult = ref<Quint[]>([])
+let photoQueryResult = ref<Quint[]>([])
+
+watch(() => (session.webId), async (webId, _) => {
+  // only watching the webId to not query the store with webId being undefined
   if (!webId) {
     return;
   }
-  if (!datasetStore.hasStore(webId)) {
-    let profileStore = await getResource(webId, session)
-      .then((resp) => resp.data)
-      .then((respText) => parseToN3(respText, webId))
-      .then(parsedN3 => parsedN3.store);
-    datasetStore.addStore(webId, profileStore);
-  }
-  let query = datasetStore.getQuint(webId, VCARD("fn"), null, null, webId);
-  name.value = query.length > 0 ? query[0].object : undefined;
-  query = datasetStore.getQuint(webId, VCARD("hasPhoto"), null, null, webId);
-  vcardPhoto.value = query.length > 0 ? query[0].object : undefined;
-})
+  nameQueryResult.value = await store.getQuintReactive(webId, VCARD("fn"), null, null, webId);
+  photoQueryResult.value = await store.getQuintReactive(webId, VCARD("hasPhoto"), null, null, webId);
+}, { immediate: true });
+
+const name = computed(() => nameQueryResult.value.map(e => e.object)[0]);
+const vcardPhoto = computed(() => photoQueryResult.value.map(e => e.object)[0]);
+
+async function logout() {
+  session.logout();
+  store.clear();
+}
 </script>
 
 <template>
-  <div class="col-3">
+  <div class="col-2">
     <img id="logo" src="/src/assets/logo.png" alt="Icon" />
   </div>
-  <div class="hidden lg:block lg:col-3 text-center">
-    <span style="color:black; font-weight: bold;">Your Data Space {{ name ? "(" + name + ")" : "" }}</span>
+  <div class="hidden lg:block lg:col-5 text-center" style="color:black; font-weight: bold;">
+    <div>Welcome to Your Data Space</div>
+    <span>{{ name || session.webId }}</span>
   </div>
-  <div class="col-3 flex justify-content-end">
-    <img v-if="session.isActive" id="profile-photo" :src="vcardPhoto" />
+  <div id="right-header" class="col-2 flex justify-content-end align-items-center">
+    <img v-if="vcardPhoto" id="profile-photo" :src="vcardPhoto" />
+    <Button v-if="session.isActive" id="button-sign-out" class="p-button-secondary p-button-rounded"
+      icon="pi pi-sign-out" @click="logout" />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#profile-photo {
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+  margin-right: -10%;
+}
+
+#button-sign-out {
+  position: relative;
+  z-index: 0;
+  transition: all 0.3s ease;
+}
+
+#right-header:hover #profile-photo {
+  margin-right: 2px;
+  /* Separate on hover */
+}
+
+#right-header:hover #button-sign-out {
+  transform: translateX(0px);
+}
+</style>

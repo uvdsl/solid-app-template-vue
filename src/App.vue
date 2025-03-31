@@ -3,10 +3,13 @@ import LandingView from './views/LandingView.vue'
 import ProfileHeader from './components/ProfileHeader.vue'
 import { useSolidSession } from './composables/useSolidSession';
 import { useServiceWorkerUpdate } from './composables/useServiceWorkerUpdate';
+import ContentPane from './views/ContentPane.vue';
+import { useReactiveStoreWithWeb } from './composables/useReactiveStoreWithWeb';
 
 const { hasUpdatedAvailable, refreshApp } = useServiceWorkerUpdate();
 const { session, restoreSession } = useSolidSession();
-restoreSession().then(() => console.log("Logged in:", session.webId));
+const { store } = useReactiveStoreWithWeb();
+restoreSession().then(() => store.setConfig({ session })).then(() => console.log("Logged in:", session.webId));
 </script>
 
 <template>
@@ -14,8 +17,8 @@ restoreSession().then(() => console.log("Logged in:", session.webId));
     <ProfileHeader />
   </div>
   <div id="content-background-pane">
-    <LandingView />
-    <!-- <StoragePane /> -->
+    <LandingView v-if="!session.isActive" />
+    <ContentPane v-else/>
   </div>
   <Dialog id="update-dialog" header="We updated the App!" v-model:visible="hasUpdatedAvailable" position="bottomright"
     :breakpoints="{ '420px': '100vw' }">
