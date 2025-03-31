@@ -2,8 +2,8 @@
 import { ref } from 'vue';
 import { useSolidSession } from '../composables/useSolidSession';
 import { useToast } from 'primevue/usetoast';
-import { getResource, parseToN3 } from '../libs/solidRequests';
-import { SOLID } from '../libs/namespaces';
+import { getResource, parseToN3 } from '@uvdsl/solid-requests';
+import { SOLID } from '@uvdsl/solid-requests';
 
 const { session } = useSolidSession();
 const toast = useToast();

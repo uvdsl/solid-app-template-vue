@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSolidSession } from '../composables/useSolidSession';
 import { computed, ref, watch } from 'vue';
-import { VCARD } from '../libs/namespaces';
+import { VCARD } from '@uvdsl/solid-requests';
 import { useWebReactiveQuintStore, Quint } from '../composables/useWebReactiveQuintStore';
 
 const { session } = useSolidSession();

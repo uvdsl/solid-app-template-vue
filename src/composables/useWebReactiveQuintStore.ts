@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 import { Store } from "n3";
 import { Session } from "@uvdsl/solid-oidc-client-browser";
-import { getResource, parseToN3 } from "../libs/solidRequests";
+import { getResource, parseToN3 } from "@uvdsl/solid-requests";
 
 /**
  *
@@ -208,6 +208,7 @@ class WebReactiveQuintStore extends ReactiveQuintStore {
 
 }
 
+const store = reactive(new WebReactiveQuintStore());
 /**
 *  Usage Example
 * 
@@ -221,8 +222,6 @@ const name = computed(() => nameQueryResult.value.map(e => e.object)[0]);
 const vcardPhoto = computed(() => photoQueryResult.value.map(e => e.object)[0]);
 ```
 */
-const store = reactive(new WebReactiveQuintStore());
-
 export const useWebReactiveQuintStore = () => {
   return { store };
 };
