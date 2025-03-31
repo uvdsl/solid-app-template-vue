@@ -4,11 +4,11 @@ import ProfileHeader from './components/ProfileHeader.vue'
 import { useSolidSession } from './composables/useSolidSession';
 import { useServiceWorkerUpdate } from './composables/useServiceWorkerUpdate';
 import ContentPane from './views/ContentPane.vue';
-import { useReactiveStoreWithWeb } from './composables/useReactiveStoreWithWeb';
+import { useWebReactiveQuintStore } from './composables/useWebReactiveQuintStore';
 
 const { hasUpdatedAvailable, refreshApp } = useServiceWorkerUpdate();
 const { session, restoreSession } = useSolidSession();
-const { store } = useReactiveStoreWithWeb();
+const { store } = useWebReactiveQuintStore();
 restoreSession().then(() => store.setConfig({ session })).then(() => console.log("Logged in:", session.webId));
 </script>
 

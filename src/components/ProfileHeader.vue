@@ -2,10 +2,10 @@
 import { useSolidSession } from '../composables/useSolidSession';
 import { computed, ref, watch } from 'vue';
 import { VCARD } from '../libs/namespaces';
-import { useReactiveStoreWithWeb, Quint } from '../composables/useReactiveStoreWithWeb';
+import { useWebReactiveQuintStore, Quint } from '../composables/useWebReactiveQuintStore';
 
 const { session } = useSolidSession();
-const { store } = useReactiveStoreWithWeb();
+const { store } = useWebReactiveQuintStore();
 
 
 let nameQueryResult = ref<Quint[]>([])
@@ -16,8 +16,8 @@ watch(() => (session.webId), async (webId, _) => {
   if (!webId) {
     return;
   }
-  nameQueryResult.value = await store.getQuintReactive(webId, VCARD("fn"), null, null, webId);
-  photoQueryResult.value = await store.getQuintReactive(webId, VCARD("hasPhoto"), null, null, webId);
+  nameQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("fn"), null, null, webId);
+  photoQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("hasPhoto"), null, null, webId);
 }, { immediate: true });
 
 const name = computed(() => nameQueryResult.value.map(e => e.object)[0]);
@@ -69,7 +69,8 @@ async function logout() {
 /* No overlap on small screens */
 @media (max-width: 1023px) {
   .overlap {
-    margin-right: 8px; /* Space instead of overlap */
+    margin-right: 8px;
+    /* Space instead of overlap */
   }
 }
 </style>
