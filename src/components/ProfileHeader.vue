@@ -30,22 +30,22 @@ async function logout() {
 </script>
 
 <template>
-  <div class="col-2">
+  <div class="lg:col-2 col-6">
     <img id="logo" src="/src/assets/logo.png" alt="Icon" />
   </div>
   <div class="hidden lg:block lg:col-5 text-center" style="color:black; font-weight: bold;">
     <div>Welcome to Your Data Space</div>
     <span>{{ name || session.webId }}</span>
   </div>
-  <div id="right-header" class="col-2 flex justify-content-end align-items-center">
-    <img v-if="vcardPhoto" id="profile-photo" :src="vcardPhoto" />
+  <div id="right-header" class="lg:col-2 col-6 flex justify-content-end align-items-center">
+    <img v-if="vcardPhoto" id="profile-photo" class="overlap" :src="vcardPhoto" />
     <Button v-if="session.isActive" id="button-sign-out" class="p-button-secondary p-button-rounded"
       icon="pi pi-sign-out" @click="logout" />
   </div>
 </template>
 
 <style scoped>
-#profile-photo {
+.overlap {
   border-radius: 50%;
   position: relative;
   z-index: 1;
@@ -53,18 +53,23 @@ async function logout() {
   margin-right: -10%;
 }
 
-#button-sign-out {
-  position: relative;
-  z-index: 0;
-  transition: all 0.3s ease;
+
+
+/* Default overlap on large screens */
+@media (min-width: 1024px) {
+  .overlap {
+    margin-right: -10%;
+  }
+
+  #right-header:hover .overlap {
+    margin-right: 2px;
+  }
 }
 
-#right-header:hover #profile-photo {
-  margin-right: 2px;
-  /* Separate on hover */
-}
-
-#right-header:hover #button-sign-out {
-  transform: translateX(0px);
+/* No overlap on small screens */
+@media (max-width: 1023px) {
+  .overlap {
+    margin-right: 8px; /* Space instead of overlap */
+  }
 }
 </style>
