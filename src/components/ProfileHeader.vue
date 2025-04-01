@@ -9,19 +9,15 @@ import LogoutButton from './LogoutButton.vue';
 const { session } = useSolidSession();
 const { store } = useSolidRdfStore();
 
-
 let nameQueryResult = ref<Quint[]>([])
 let photoQueryResult = ref<Quint[]>([])
 
 watch(() => (session.webId), async (webId, _) => {
-  // only watching the webId to not query the store with webId being undefined
-  if (!webId) {
+  if (!webId) { // only watching the webId to not query the store with webId being undefined
     return;
   }
   nameQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("fn"), null, null, webId);
   photoQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("hasPhoto"), null, null, webId);
-
-  setTimeout(() => store.updateFromWeb(webId), 5000)
 }, { immediate: true });
 
 const name = computed(() => nameQueryResult.value.map(e => e.object)[0]);

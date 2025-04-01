@@ -18,9 +18,66 @@ npm run dev
 
 ## Repository Structure
 
-... hang on ... I am working on it.
+| **Directory/File**               | **Description**                                                                                   |
+|----------------------------------|---------------------------------------------------------------------------------------------------|
+| `.vscode/`                       | not important - just some VS Code settings                     |
+| `img/`                           | not important - just the image directory for this README       |
+| `public/`                        | Includes static assets such as icons                          |
+| `src/`                           | Main source directory containing the core application code    |
+| ├─ `assets/`                     | Static assets such as the app logo                            |
+| ├─ `components/`                 | Reusable Vue components used throughout the app               |
+| ├─ `composables/`                | Stateful objects such as Solid `session` and RDF `store`      |
+| ├─ `views/`                      | "Panes"/"Pages" of the app (e.g. by re-using single components) |
+| ├─ `App.vue`                     | Main Vue component - root of the app                                   |
+| ├─ `main.ts`                     | Entry point of the application, initializing Vue and mounting the app. |
+| `.env.example`                   | not important - Example environment configuration file.                 |
+| `.gitignore`                     | not important - Specifies files and directories to be ignored by Git.   |
+| `Dockerfile`                     | not important - Instructions to build a Docker image for the app.       |
+| `README.md`                      | Documentation |
+| `index.html`                     | not important - Main HTML file, Vue will inject the actual app. |
+| `package-lock.json`              | not important - Locks versions of dependencies for consistent installs. |
+| `package.json`                   | not important - Metadata, dependencies, scripts, and configurations for the project.   |
+| `prod_nginx.conf`                | not important - Nginx configuration for production deployment.  |
+| `tsconfig.app.json`              | not important - TypeScript configuration for the application.   |
+| `tsconfig.json`                  | not important - Base TypeScript configuration file.  |
+| `vite.config.ts`                 | not important - Configuration for Vite, the build tool used in this project.   |
 
-## Let me explain the general idea ...
+New to Vue? Check out their awesome and beginner-friendly [tutorial](https://vuejs.org/guide/introduction.html).
+
+Jump right in? The best starting point is `src/App.vue`: 
+
+In the `<template>` section, we have a `content-header` which is the top bar (in the screenshot: Solid logo and the black text).
+Then, we have the `content-background-pane` which is the dark center card with rounded corners.
+This acts as the background for the components that you display.
+Currently, there is the `src/views/LandingView.vue` displayed, as the user is not logged in yet: `v-if="!session.isActive"`.
+When the user is logged in, the `src/views/ContentPane.vue` is displayed: `v-else`.
+Kindly ignore the `Dialog` component, this belongs to the `serviceWorker` - don't worry about that for now.
+Finally, there is the `Toast` component, which is a global component that you can trigger to show a temporary banner/message to a user to let them know what happens.
+
+In the `<script>` section, we handle the redirect after a user logs in (`restoreSession`) and then give the `session` object to the Solid RDF Store (`store.setConfig({ session })`) such that the store can make authenticated requests.
+Read more on the login and `session` in this [Solid-OIDC repository](https://github.com/uvdsl/solid-oidc-client-browser/).
+
+
+To see the store in action, visit `src/components/ProfileHeader.vue`:
+
+In the `<template>` section, we have the components of the profile header: the Solid logo, the black text, and some elements that are currently not visibile because the user is not logged in (profile photo and logout button).
+
+In the `<script>` section, we watch the `session.webId` from `useSolidSession` to trigger code execution whenever the `session.webId` changes (e.g. when a user logs in).
+Only then, the code in the `watch` clause is executed: First we check if a `webId` exists (if not, we have no WebId profile to query), and if it does, then we ask the Solid RDF Store `store` from `useSolidRdfStore` for the name and photo that is linked to the webId (i.e. the name and photo of the user).
+In the background, the store fetches the dataset (the WebId profile) from the Web, parses the RDF data, queries the dataset, and returns a reactive result.
+When the WebId profile is updated, and the store fetches the profile again, these results will automatically update, and so will the UI! This is achieved by using Vue's reactivity. Read more about that [here](https://vuejs.org/guide/essentials/reactivity-fundamentals).
+It is important to use both `Ref` for the query results, and `computed` for the resulting values - otherwise the reactivity breaks and nothing will update. But if you do it like I show you here, it works nicely.
+
+By the way, the store will only fetch the datasets once, on your first query to the dataset.
+If you want the store to re-fetch the dataset - because you want to see if it was updated - you have to manually call `store.updateFromWeb(dataset)` where `dataset` is the URI of your dataset.
+Read more on the `store` in the [Solid RDF Store repository](https://github.com/uvdsl/solid-rdf-store/).
+
+If you want to write data, you can use functions provided by this small utiltiy repository, [Solid Requests](https://github.com/uvdsl/solid-requests/). 
+
+Where should you start writing your own application logic? 
+Start in `src/views/ContentPane.vue` as your entry component into this template.
+
+## Additional Information
 
 If you have any questions about this template, let me know!
 
@@ -67,7 +124,7 @@ If you see anyting related to a `serviceWorker` in this project, it is for this 
 If you don't know what this is, don't worry and don't care too much! :smile:
 If you already know a bit, you will find your way around.
 
-## Additional Information
+## What about Data?
 
 If you are curious, read on!
 
