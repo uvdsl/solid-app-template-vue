@@ -2,10 +2,11 @@
 import { useSolidSession } from '../composables/useSolidSession';
 import { computed, ref, watch } from 'vue';
 import { VCARD } from '@uvdsl/solid-requests';
-import { useWebReactiveQuintStore, Quint } from '../composables/useWebReactiveQuintStore';
+import { useSolidRdfStore } from '../composables/useSolidRdfStore';
+import { Quint } from '@uvdsl/solid-rdf-store';
 
 const { session } = useSolidSession();
-const { store } = useWebReactiveQuintStore();
+const { store } = useSolidRdfStore();
 
 
 let nameQueryResult = ref<Quint[]>([])
@@ -18,6 +19,8 @@ watch(() => (session.webId), async (webId, _) => {
   }
   nameQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("fn"), null, null, webId);
   photoQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("hasPhoto"), null, null, webId);
+
+  setTimeout(() => store.updateFromWeb(webId), 5000)
 }, { immediate: true });
 
 const name = computed(() => nameQueryResult.value.map(e => e.object)[0]);
