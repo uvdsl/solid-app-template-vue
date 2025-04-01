@@ -30,7 +30,7 @@ const vcardPhoto = computed(() => photoQueryResult.value.map(e => e.object)[0]);
 
 <template>
   <div class="lg:col-2 col-6">
-    <img id="logo" src="/src/assets/logo.png" alt="Icon" />
+    <img id="logo" src="/src/assets/logo.svg" alt="Icon" />
   </div>
   <div class="hidden lg:block lg:col-5 text-center" style="color:black; font-weight: bold;">
     <div>Welcome to Your Data Space</div>

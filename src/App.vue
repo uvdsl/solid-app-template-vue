@@ -53,7 +53,7 @@ body {
   height: 100%;
   width: 100%;
   padding: 10px;
-  background-color: var(--p-emerald-200);
+  background-color: var(--p-primary-200);
 }
 
 .no-tap-highlight {
@@ -76,7 +76,7 @@ body {
 #content-background-pane {
   width: 100%;
   height: calc(100% - 55px);
-  background-color: var(--p-zinc-800);
+  background-color: var(--p-surface-800);
   box-sizing: border-box;
   border-radius: 30px;
   padding: 30px;

@@ -1,1 +1,2 @@
-# Solid Cloud UI
+# Solid App Template (Vue Edition)
+

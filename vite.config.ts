@@ -13,8 +13,8 @@ export default defineConfig({
       injectRegister: null, // manual
       strategies: "injectManifest",
       manifest: {
-        short_name: "Solid Cloud UI",
-        name: "Solid Cloud UI",
+        short_name: "Solid App",
+        name: "Solid App",
         start_url: "./",
         display: "standalone",
         theme_color: "#1f2d40",
