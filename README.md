@@ -2,6 +2,8 @@
 
 This is my template for Web Apps that follow the [Solid protocol](https://solidproject.org/TR/protocol) using [Vue](https://vuejs.org).
 
+![app preview](img/app-preview.png)
+
 ## Quick Start
 Use a somewhat recent node version, e.g. node v20.
 

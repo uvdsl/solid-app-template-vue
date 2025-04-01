@@ -16,10 +16,12 @@ restoreSession().then(() => store.setConfig({ session })).then(() => console.log
   <div id="content-header">
     <ProfileHeader />
   </div>
+
   <div id="content-background-pane">
     <LandingView v-if="!session.isActive" />
     <ContentPane v-else/>
   </div>
+
   <Dialog id="update-dialog" header="We updated the App!" v-model:visible="hasUpdatedAvailable" position="bottomright"
     :breakpoints="{ '420px': '100vw' }">
     <div>Save your progress.</div>
@@ -80,6 +82,7 @@ body {
   box-sizing: border-box;
   border-radius: 30px;
   padding: 30px;
+  overflow: scroll
 }
 
 #logo {
