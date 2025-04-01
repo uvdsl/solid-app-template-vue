@@ -4,6 +4,7 @@ import { computed, ref, watch } from 'vue';
 import { VCARD } from '@uvdsl/solid-requests';
 import { useSolidRdfStore } from '../composables/useSolidRdfStore';
 import { Quint } from '@uvdsl/solid-rdf-store';
+import LogoutButton from './LogoutButton.vue';
 
 const { session } = useSolidSession();
 const { store } = useSolidRdfStore();
@@ -25,11 +26,6 @@ watch(() => (session.webId), async (webId, _) => {
 
 const name = computed(() => nameQueryResult.value.map(e => e.object)[0]);
 const vcardPhoto = computed(() => photoQueryResult.value.map(e => e.object)[0]);
-
-async function logout() {
-  session.logout();
-  store.clear();
-}
 </script>
 
 <template>
@@ -42,8 +38,7 @@ async function logout() {
   </div>
   <div id="right-header" class="lg:col-2 col-6 flex justify-content-end align-items-center">
     <img v-if="vcardPhoto" id="profile-photo" class="overlap" :src="vcardPhoto" />
-    <Button v-if="session.isActive" id="button-sign-out" class="p-button-secondary p-button-rounded"
-      icon="pi pi-sign-out" @click="logout" />
+    <LogoutButton />
   </div>
 </template>
 
@@ -55,8 +50,6 @@ async function logout() {
   transition: all 0.3s ease;
   margin-right: -10%;
 }
-
-
 
 /* Default overlap on large screens */
 @media (min-width: 1024px) {
