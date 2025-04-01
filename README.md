@@ -44,7 +44,9 @@ npm run dev
 
 New to Vue? Check out their awesome and beginner-friendly [tutorial](https://vuejs.org/guide/introduction.html).
 
-Jump right in? The best starting point is `src/App.vue`: 
+#### Jump right in? 
+
+The best starting point is `src/App.vue`: 
 
 In the `<template>` section, we have a `content-header` which is the top bar (in the screenshot: Solid logo and the black text).
 Then, we have the `content-background-pane` which is the dark center card with rounded corners.
@@ -169,4 +171,4 @@ And some fun demos pushing the boundaries of the Solid Protocol using other tech
 
 - Hendrik Becker, Hung Vu, Anett Katzenbach, Christoph H.-J. Braun, Tobias Käfer: _Monetising Resources on a SoLiD Pod Using Blockchain Transactions_. ESWC (Satellite Events) 2021: 49-53 [[Open Access](http://people.aifb.kit.edu/co1683/2021/eswc-demo-solibra/solibra.pdf), [Website](http://people.aifb.kit.edu/co1683/2021/eswc-demo-solibra/), [Video](http://people.aifb.kit.edu/co1683/2021/eswc-demo-solibra/#v)]
 
-- Christoph H.-J. Braun, Tobias Käfer: _A SoLiD App to Participate in a Scalable Semantic Supply Chain Network on the Blockchain (Demo)_. ISWC (Demos/Industry) 2020: 99-104 [[Open Accses](https://ceur-ws.org/Vol-2721/paper524.pdf), [Website](http://people.aifb.kit.edu/co1683/2020/iswc-demo-chain/#v), [Code](https://github.com/uvdsl/LinkedData-Logistics), [Video](http://people.aifb.kit.edu/co1683/2020/iswc-demo-chain/)]
+- Christoph H.-J. Braun, Tobias Käfer: _A SoLiD App to Participate in a Scalable Semantic Supply Chain Network on the Blockchain (Demo)_. ISWC (Demos/Industry) 2020: 99-104 [[Open Accses](https://ceur-ws.org/Vol-2721/paper524.pdf), [Website](http://people.aifb.kit.edu/co1683/2020/iswc-demo-chain/), [Code](https://github.com/uvdsl/LinkedData-Logistics), [Video](http://people.aifb.kit.edu/co1683/2020/iswc-demo-chain/#v)]
