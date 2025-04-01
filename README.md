@@ -16,7 +16,7 @@ npm run dev
 
 ## Repository Structure
 
-...
+... hang on ... I am working on it.
 
 ## Let me explain the general idea ...
 
