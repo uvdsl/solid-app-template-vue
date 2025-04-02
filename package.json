@@ -11,7 +11,7 @@
   "dependencies": {
     "@primevue/themes": "^4.2.4",
     "@uvdsl/solid-oidc-client-browser": "^0.0.3",
-    "@uvdsl/solid-rdf-store": "^0.0.1",
+    "@uvdsl/solid-rdf-store": "^0.0.2",
     "@uvdsl/solid-requests": "^0.0.3",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",

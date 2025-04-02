@@ -16,8 +16,8 @@ watch(() => (session.webId), async (webId, _) => {
   if (!webId) { // only watching the webId to not query the store with webId being undefined
     return;
   }
-  nameQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("fn"), null, null, webId);
-  photoQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("hasPhoto"), null, null, webId);
+  nameQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("fn"), null, null, webId).catch(() => []); // if network or parsing error occurs, dont do anything:
+  photoQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("hasPhoto"), null, null, webId).catch(() => []); // you could re-try or create a toast to let the user know.
 }, { immediate: true });
 
 const name = computed(() => nameQueryResult.value.map(e => e.object)[0]);
