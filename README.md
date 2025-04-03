@@ -121,7 +121,7 @@ Have a look at the usage example in that repository.
 My UI framework of choice is [PrimeVue](https://primevue.org) in combination with their [icons](https://primeng.org/icons) and their layout utiltiy [PrimeFlex](https://primeflex.org/). If you want a different UI framework, feel free to throw away all of this and use your own!
 
 #### PWA
-By the way, this app template is actually a [Progressive Web App (PWA)](https://en.wikipedia.org/wiki/Progressive_web_app), which can be installed on a phone.
+By the way, this app template is actually a [Progressive Web App (PWA)](https://en.wikipedia.org/wiki/Progressive_web_app), which can be installed on a device from the browser itself.
 If you see anyting related to a `serviceWorker` in this project, it is for this PWA part.
 If you don't know what this is, don't worry and don't care too much! :smile:
 If you already know a bit, you will find your way around.
