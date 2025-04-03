@@ -3,7 +3,7 @@ import { useSolidSession } from '../composables/useSolidSession';
 import { computed, ref, watch } from 'vue';
 import { VCARD } from '@uvdsl/solid-requests';
 import { useSolidRdfStore } from '../composables/useSolidRdfStore';
-import { Quint } from '@uvdsl/solid-rdf-store';
+import { Quint, WebReactiveResultError } from '@uvdsl/solid-rdf-store';
 import LogoutButton from './LogoutButton.vue';
 
 const { session } = useSolidSession();
@@ -16,8 +16,10 @@ watch(() => (session.webId), async (webId, _) => {
   if (!webId) { // only watching the webId to not query the store with webId being undefined
     return;
   }
-  nameQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("fn"), null, null, webId).catch(() => []); // if network or parsing error occurs, dont do anything:
-  photoQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("hasPhoto"), null, null, webId).catch(() => []); // you could re-try or create a toast to let the user know.
+  nameQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("fn"), null, null, webId)
+    .catch((error: WebReactiveResultError) => error.reactiveResult); // if network or parsing error occurs, dont do anything for now, just get the reactive result :)
+  photoQueryResult.value = await store.getQuintReactiveFromWeb(webId, VCARD("hasPhoto"), null, null, webId)
+    .catch((error: WebReactiveResultError) => error.reactiveResult); // if network or parsing error occurs, you could re-try or create a toast to let the user know.
 }, { immediate: true });
 
 const name = computed(() => nameQueryResult.value.map(e => e.object)[0]);
