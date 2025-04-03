@@ -112,8 +112,8 @@ function toSolid() {
   <div id="new-register-card">
     <h3>New to Solid?</h3>
     <div class="lg:flex sm:idp-button-wrapper">
-      <Button label="What is Solid" icon="pi pi-question" iconPos="right" class="p-button-secondary idp-button" @click="toSolid" />
-      <Button label="Get a Pod!" icon="pi pi-user-plus" iconPos="right" class="p-button-secondary idp-button" @click="getAPod" />
+      <Button label="What is Solid?" icon="pi pi-question-circle" class="p-button-secondary idp-button" @click="toSolid" />
+      <Button label="Get a Pod!" icon="pi pi-user-plus" class="p-button-secondary idp-button" @click="getAPod" />
     </div>
   </div>
 
