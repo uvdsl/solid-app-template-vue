@@ -155,7 +155,7 @@ The Solid Protocol standardizes the data access interface, authorization, authen
 
 Therefore, any data is good to be handled using the Solid Protocol!
 
-If you want to read up on how this works in B2B environments, check out our [presentation video](https://vimeo.com/1061996736) (starting at 46min) of the [MANDAT project](https://www.ti.rw.fau.de/projects/mandat/). There is code, too; see our open source [demo repository](https://github.com/mandat-project/hackathon-demo).
+If you want to read up on how this works in B2B environments, check out our [presentation video](https://vimeo.com/1061996736) (starting at 48:20 min) of the [MANDAT project](https://www.ti.rw.fau.de/projects/mandat/). There is code, too; see our open source [demo repository](https://github.com/mandat-project/hackathon-demo).
 
 And, have a look at the our publications:
 
