@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@primevue/themes": "^4.2.4",
-    "@uvdsl/solid-oidc-client-browser": "^0.0.3",
-    "@uvdsl/solid-rdf-store": "^0.0.5",
-    "@uvdsl/solid-requests": "^0.0.3",
+    "@uvdsl/solid-oidc-client-browser": "^0.0.6",
+    "@uvdsl/solid-rdf-store": "^0.0.7",
+    "@uvdsl/solid-requests": "^0.0.4",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primevue": "^4.2.4",
