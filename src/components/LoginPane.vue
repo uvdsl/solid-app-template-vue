@@ -31,7 +31,7 @@ async function loginWithWebID(webid: string) {
   }
   let profileStore;
   try {
-    const parsed = await parseToN3(resp.data, webid);
+    const parsed = await parseToN3(await resp.text(), webid);
     profileStore = parsed.store;
   } catch (err) {
     toast.add({
