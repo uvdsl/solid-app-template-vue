@@ -10,10 +10,10 @@ const toast = useToast();
 const redirect_uri = window.location.href;
 const webid = ref("");
 const idps = [
-  'https://solid.aifb.kit.edu',
-  'https://solidcommunity.net',
-  'https://solidweb.org',
-  'https://solidweb.me',
+  'https://solid.aifb.kit.edu/',
+  'https://solidcommunity.net/',
+  'https://solidweb.me/',
+  'https://login.inrupt.com'
 ];
 
 async function loginWithWebID(webid: string) {
