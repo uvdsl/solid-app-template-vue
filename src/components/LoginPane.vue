@@ -7,13 +7,14 @@ import { SOLID } from '@uvdsl/solid-requests';
 
 const { session } = useSolidSession();
 const toast = useToast();
-const redirect_uri = window.location.href;
+const redirect_uri = new URL(window.location.href).origin;
 const webid = ref("");
 const idps = [
   'https://solid.aifb.kit.edu/',
   'https://solidcommunity.net/',
   'https://solidweb.me/',
-  'https://login.inrupt.com'
+  'https://login.inrupt.com',
+  'http://localhost:8080'
 ];
 
 async function loginWithWebID(webid: string) {

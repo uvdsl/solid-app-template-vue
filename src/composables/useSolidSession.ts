@@ -1,4 +1,4 @@
-import { ClientDetails, Session } from "@uvdsl/solid-oidc-client-browser";
+import { ClientDetails, Session, SessionOptions } from "@uvdsl/solid-oidc-client-browser";
 import { reactive } from "vue";
 
 interface IuseSolidSession {
@@ -12,7 +12,9 @@ const clientDetails: ClientDetails = {
   client_name: "uvdsl's Solid App Template"
 };
 
-const session = reactive(new Session(clientDetails));
+const sessionOptions = { onSessionExpirationWarning: () => console.log("warning session will expire") } as SessionOptions
+
+const session = reactive(new Session(clientDetails, sessionOptions));
 
 async function restoreSession() {
   await session.handleRedirectFromLogin();
