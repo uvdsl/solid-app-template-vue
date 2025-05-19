@@ -5,11 +5,14 @@ import { useSolidSession } from './composables/useSolidSession';
 import { useServiceWorkerUpdate } from './composables/useServiceWorkerUpdate';
 import ContentPane from './views/ContentPane.vue';
 import { useSolidRdfStore } from './composables/useSolidRdfStore';
+import { watch } from 'vue';
 
 const { hasUpdatedAvailable, refreshApp } = useServiceWorkerUpdate();
-const { session, restoreSession } = useSolidSession();
+const { session } = useSolidSession();
 const { store } = useSolidRdfStore();
-restoreSession().then(() => store.setConfig({ session })).then(() => console.log("Logged in:", session.webId));
+store.setConfig({ session })
+session.handleRedirectFromLogin();
+watch(() => session.isActive, () => console.log("Logged in:", session.webId), { immediate: true });
 </script>
 
 <template>
@@ -19,7 +22,7 @@ restoreSession().then(() => store.setConfig({ session })).then(() => console.log
 
   <div id="content-background-pane">
     <LandingView v-if="!session.isActive" />
-    <ContentPane v-else/>
+    <ContentPane v-else />
   </div>
 
   <Dialog id="update-dialog" header="We updated the App!" v-model:visible="hasUpdatedAvailable" position="bottomright"

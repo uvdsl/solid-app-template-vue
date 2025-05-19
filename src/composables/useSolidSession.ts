@@ -1,4 +1,4 @@
-import { ClientDetails, Session, SessionOptions } from "@uvdsl/solid-oidc-client-browser";
+import { DynamicRegistrationClientDetails, DereferencableIdClientDetails, Session, SessionOptions } from "@uvdsl/solid-oidc-client-browser";
 import { reactive } from "vue";
 
 interface IuseSolidSession {
@@ -6,19 +6,21 @@ interface IuseSolidSession {
   restoreSession: () => Promise<void>;
 }
 
-const clientDetails: ClientDetails = {
+const clientDetails: DereferencableIdClientDetails = {
   client_id: "https://uvdsl.solid.aifb.kit.edu/test/client_id.jsonld",
-  redirect_uris: [window.location.href],
-  client_name: "uvdsl's Solid App Template"
 };
+
+// const clientDetails: DynamicRegistrationClientDetails = {
+//   redirect_uris: [window.location.href],
+//   client_name: "uvdsl's Solid App Template"
+// };
 
 const sessionOptions = { onSessionExpirationWarning: () => console.log("warning session will expire") } as SessionOptions
 
 const session = reactive(new Session(clientDetails, sessionOptions));
+session.restore();
 
-async function restoreSession() {
-  await session.handleRedirectFromLogin();
-}
+
 
 /**
  * Auto-re-login / and handle redirect after login
@@ -36,6 +38,5 @@ async function restoreSession() {
 export const useSolidSession = () => {
   return {
     session,
-    restoreSession,
   } as IuseSolidSession;
 };
